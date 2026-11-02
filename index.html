@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Start</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="start-screen">
+    <svg class="hud" viewBox="0 0 1600 900" aria-hidden="true">
+      <defs>
+        <radialGradient id="globe-fill" cx="36%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#d9f1ff"/>
+          <stop offset="0.45" stop-color="#6bb6f5"/>
+          <stop offset="1" stop-color="#1a4fd0"/>
+        </radialGradient>
+
+        <g id="frames">
+          <path d="M70 30H560L590 60H1010L1040 30H1530L1570 70V830L1530 870H1040L1010 840H590L560 870H70L30 830V70Z"/>
+          <path d="M70 110L110 70H440L480 110V200M480 280V340L450 370H300M220 370H70V110"/>
+          <path d="M70 400H300M380 400H450L480 430V620M480 700V800L450 830H110L70 790V400"/>
+          <path d="M1530 110L1490 70H1160L1120 110V200M1120 280V340L1150 370H1300M1380 370H1530V110"/>
+          <path d="M1530 400H1300M1220 400H1150L1120 430V620M1120 700V800L1150 830H1490L1530 790V400"/>
+          <path d="M510 170V130L540 100H1060L1090 130V170"/>
+          <path d="M510 730V770L540 800H1060L1090 770V730"/>
+          <path d="M510 420V480M1090 420V480"/>
+        </g>
+      </defs>
+
+      <use href="#frames" class="glow"/>
+      <use href="#frames"/>
+      <path class="accent" d="M30 200V280M30 620V700M1570 200V280M1570 620V700M740 60H860M740 840H860"/>
+
+      <image href="assets/uzbekistan-map.svg" x="112.5" y="132" width="325" height="212"/>
+      <text class="map-title" x="275" y="108">Özbekiston Respublikasi</text>
+
+      <image href="ung.png" x="142.5" y="482.4" width="265" height="249"/>
+
+      <g transform="translate(1325 220) rotate(-18)">
+        <path class="orbit" d="M-150 0A150 66 0 0 1 150 0" pathLength="360"/>
+        <circle r="110" fill="url(#globe-fill)" stroke="none"/>
+        <g class="globe-grid">
+          <circle r="110"/>
+          <ellipse rx="55" ry="110"/>
+          <ellipse rx="95" ry="110"/>
+          <path d="M0-110V110M-95-55Q0-35 95-55M-110 0Q0 20 110 0M-95 55Q0 75 95 55"/>
+        </g>
+        <path class="orbit" d="M150 0A150 66 0 0 1 -150 0" pathLength="360"/>
+        <image href="assets/globe-flag.png" x="-110" y="-110" width="220" height="220" transform="rotate(18)"/>
+      </g>
+      <circle id="emblem" class="emblem" cx="1323" cy="216" r="58" stroke="none"/>
+
+      <image href="logo.png" x="1140" y="430" width="370" height="370"/>
+    </svg>
+
+    <h1>BUXORO NEFTNI QAYTA IŞLAŞ ZAVODINI <br> MODERNIZATSIYA QILIŞ</h1>
+    <h2 class="subtitle_new">LOYIHASIGA START BERIŞ MAROSIMI</h2>
+    <button id="start-button" type="button" aria-label="Start">
+      <svg class="palm" viewBox="-250 -250 500 500" aria-hidden="true">
+        <defs>
+          <path id="hand-shape" pathLength="100" d="M-100.1 143.5L-105.1 133.3L-109.6 121.9L-114.2 107.6L-119.3 86.1L-121.7 74.0L-123.7 66.4L-126.2 54.3L-147.0 -24.7L-147.6 -27.4L-147.8 -30.5L-147.6 -33.3L-147.1 -35.6L-146.2 -37.7L-144.9 -40.1L-143.2 -42.2L-140.9 -44.4L-138.7 -46.0L-136.6 -47.0L-134.0 -47.8L-130.5 -48.3L-126.5 -48.4L-123.0 -48.1L-120.3 -47.6L-117.7 -46.7L-115.3 -45.4L-113.1 -43.7L-109.4 -39.7L-107.6 -37.1L-106.4 -34.7L-90.6 5.6L-81.1 28.1L-78.0 34.4L-76.1 37.2L-75.0 38.1L-74.0 38.5L-72.7 38.6L-71.4 38.4L-70.2 37.7L-69.1 36.7L-67.9 34.8L-67.1 32.2L-66.7 29.5L-66.5 26.0L-66.8 18.8L-67.8 8.2L-69.0 -10.9L-70.7 -26.2L-72.0 -34.5L-72.5 -41.6L-74.6 -59.7L-76.1 -68.7L-78.7 -92.8L-81.7 -114.0L-82.5 -122.7L-84.6 -139.6L-86.0 -148.2L-87.5 -164.0L-87.4 -167.6L-86.7 -171.1L-85.6 -174.0L-84.3 -176.3L-82.4 -178.8L-80.4 -180.7L-77.8 -182.5L-75.1 -184.0L-72.5 -184.8L-69.4 -185.3L-65.4 -185.4L-61.9 -185.0L-59.2 -184.3L-56.4 -183.1L-53.7 -181.5L-51.4 -179.4L-49.4 -177.0L-47.9 -174.3L-46.3 -170.3L-44.9 -164.1L-43.7 -155.9L-40.6 -138.8L-38.1 -121.1L-36.5 -113.4L-33.9 -95.3L-31.0 -79.4L-29.8 -70.8L-26.7 -53.6L-24.1 -33.6L-23.3 -31.1L-22.1 -29.4L-20.4 -28.5L-18.9 -28.6L-17.6 -29.5L-16.8 -31.0L-16.4 -32.8L-16.3 -35.5L-17.1 -173.0L-17.1 -183.3L-16.9 -187.3L-16.2 -191.2L-15.1 -194.1L-13.6 -196.8L-11.4 -199.6L-8.8 -202.0L-6.2 -203.6L-3.3 -204.7L0.2 -205.4L4.5 -205.6L9.2 -205.1L13.0 -204.0L16.4 -202.2L19.3 -199.6L21.7 -196.5L23.6 -192.3L24.9 -187.7L25.3 -181.4L25.9 -123.8L26.4 -106.8L26.9 -34.9L27.3 -31.1L27.9 -29.9L28.8 -29.0L30.6 -28.5L31.5 -28.6L32.6 -29.2L33.9 -30.9L34.7 -33.8L37.1 -59.0L38.7 -68.4L41.3 -94.5L42.5 -101.9L44.3 -116.8L45.4 -129.5L46.4 -136.5L47.1 -143.3L48.4 -151.5L49.6 -162.5L50.5 -167.6L51.7 -172.1L53.8 -176.3L56.5 -179.6L59.9 -182.2L64.2 -184.2L66.4 -184.8L68.8 -185.1L74.7 -185.0L77.0 -184.5L79.5 -183.5L82.0 -182.3L84.3 -180.7L86.0 -179.2L87.6 -177.4L89.1 -175.2L90.2 -173.1L90.9 -170.9L91.4 -168.2L91.5 -164.6L90.7 -151.6L89.1 -138.2L86.6 -102.5L85.2 -91.5L82.9 -64.6L82.5 -55.9L81.3 -46.8L80.7 -38.5L79.5 -28.7L78.7 -18.4L78.5 -10.1L79.0 -8.0L80.2 -6.5L81.0 -6.1L81.9 -6.0L83.5 -6.7L85.1 -8.6L86.2 -11.4L95.9 -53.8L98.6 -67.0L100.4 -74.3L102.8 -86.7L106.6 -103.3L108.1 -107.8L110.4 -111.9L112.4 -114.3L114.4 -116.0L117.1 -117.6L119.7 -118.6L122.7 -119.2L126.3 -119.3L130.2 -119.0L133.3 -118.3L136.1 -117.1L138.5 -115.7L140.5 -113.9L142.2 -111.8L143.5 -109.4L144.4 -106.8L145.0 -104.1L145.2 -101.0L144.9 -97.0L143.8 -89.2L140.9 -74.4L138.3 -58.4L136.7 -51.1L134.1 -34.6L131.1 -19.9L128.3 -2.7L126.6 5.9L124.2 24.0L122.9 32.2L121.4 48.8L120.1 69.4L118.3 81.9L116.0 95.6L114.4 103.0L110.0 118.5L105.4 130.7L101.4 139.7L96.5 148.8L92.7 154.8L87.7 161.8L84.2 166.1L77.2 173.6L70.6 179.9L65.1 184.3L58.6 188.8L51.0 193.2L45.7 195.7L37.4 199.2L29.1 201.7L21.8 203.7L18.0 204.4L8.5 205.4L-0.6 205.7L-11.3 205.2L-20.0 204.2L-23.5 203.6L-30.7 201.7L-39.1 199.2L-48.9 195.2L-52.4 193.4L-59.8 189.0L-66.2 184.5L-70.2 181.3L-75.7 176.2L-80.7 171.1L-85.9 165.2L-90.4 159.2L-95.2 152.0Z"/>
+          <clipPath id="disc-clip">
+            <circle r="220"/>
+          </clipPath>
+          <linearGradient id="scan-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#fff" stop-opacity="0.5"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="under-light-fill">
+            <stop offset="0" stop-color="#fff" stop-opacity="0.95"/>
+            <stop offset="0.55" stop-color="#9fe6ff" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#9fe6ff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle r="226"/>
+        <circle class="spin" r="234" stroke-dasharray="90 28"/>
+        <circle class="spin reverse" r="244" stroke-dasharray="210 150"/>
+        <circle class="progress" r="254" pathLength="100" transform="rotate(-90)"/>
+        <g clip-path="url(#disc-clip)">
+          <circle class="under-light" r="220" fill="url(#under-light-fill)" stroke="none"/>
+          <circle class="wave" r="220"/>
+          <circle class="wave wave-2" r="220"/>
+          <circle class="wave wave-3" r="220"/>
+          <rect class="beam" x="-250" y="-26" width="500" height="52" fill="url(#scan-fill)" stroke="none"/>
+          <use href="#hand-shape" class="hand-glow"/>
+          <use href="#hand-shape" class="hand"/>
+          <use href="#hand-shape" class="hand-trace-glow"/>
+          <use href="#hand-shape" class="hand-trace"/>
+          <use href="#hand-shape" class="hand-trace-head"/>
+          <text class="start-label" x="0" y="120">START</text>
+        </g>
+      </svg>
+    </button>
+
+    <div class="reveal">
+      <canvas id="fireworks" aria-hidden="true"></canvas>
+      <p class="reveal-text">MODERNIZATSIYAGA <br> RUXSAT BERILDI</p>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

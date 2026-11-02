@@ -1,0 +1,558 @@
+:root {
+  /* HUD chizmasining 1 birligi: matn va tugma chizma bilan birga o'lchanadi */
+  --u: min(100vw / 1600, 100vh / 900);
+  --bg-center: #2a74e6;
+  --bg-middle: #1a54d4;
+  --bg-edge: #0e2f9e;
+  --line: #a9dcff;
+  --glow: rgb(150 215 255 / 55%);
+  --text: #fff;
+  --button-light: #2e7df0;
+  --button-dark: #0f3fb8;
+  --verified: #5dffb4;
+  --neon: #39e6ff;
+  /* Yakuniy bosqich: hamma narsa shu oraliqda yashilga o'tadi va --hold bilan birga tugaydi */
+  --finish-at: calc(var(--hold) * 0.84);
+  --finish: calc(var(--hold) * 0.16);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: Bahnschrift, "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  user-select: none;
+}
+
+#start-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 44);
+  padding: 1rem;
+  text-align: center;
+  background: radial-gradient(ellipse at center, var(--bg-center) 0%, var(--bg-middle) 55%, var(--bg-edge) 100%);
+}
+
+.hud {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.hud .glow {
+  stroke-width: 7;
+  opacity: 0.18;
+}
+
+.hud .accent {
+  stroke-width: 5;
+}
+
+.hud .globe-grid {
+  stroke: #fff;
+  stroke-width: 1;
+  opacity: 0.55;
+}
+
+.hud .orbit {
+  stroke-width: 2;
+  stroke-dasharray: 14 10;
+  animation: orbit 3s linear infinite;
+}
+
+/* Gerb rasm ichida: ustidagi ko'rinmas doira bosishni qabul qiladi */
+.hud .emblem {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 30s linear infinite;
+}
+
+.spin.reverse {
+  animation-direction: reverse;
+}
+
+h1 {
+  position: relative;
+  max-width: '600px';
+  font-size: '30px';
+  font-weight: 600;
+  line-height: 1.5;
+  text-shadow: 0 0 calc(var(--u) * 24) var(--glow);
+  text-wrap: balance;
+  margin-bottom: 0;
+}
+
+h2 {
+  max-width: '600px';
+  font-size: calc(var(--u) * 33.5);
+  margin-top: calc(var(--u) * -12);
+  font-weight: 600;
+  text-wrap: balance;
+
+}
+
+#start-button {
+  position: relative;
+  width: calc(var(--u) * 440);
+  aspect-ratio: 1;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, var(--button-light), var(--button-dark) 75%);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 0 calc(var(--u) * 50) var(--glow), inset 0 0 calc(var(--u) * 30) var(--glow);
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.4s ease;
+}
+
+.scanning #start-button {
+  box-shadow: 0 0 calc(var(--u) * 120) rgb(170 230 255 / 85%), inset 0 0 calc(var(--u) * 60) rgb(170 230 255 / 70%);
+  animation: button-verified var(--finish) var(--finish-at) linear forwards;
+}
+
+#start-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(transparent 0 270deg, rgb(190 240 255 / 75%) 360deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scanning #start-button::after {
+  opacity: 1;
+  animation: sweep calc(var(--hold) / 3) linear infinite;
+}
+
+#start-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: pulse 2.4s ease-out infinite;
+}
+
+.palm {
+  position: absolute;
+  top: calc(50% - var(--u) * 250);
+  left: calc(50% - var(--u) * 250);
+  width: calc(var(--u) * 500);
+  height: calc(var(--u) * 500);
+  overflow: visible;
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1.5;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.palm .hand {
+  fill: rgb(255 255 255 / 8%);
+  stroke: var(--text);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.palm .start-label {
+  fill: var(--text);
+  stroke: none;
+  font-size: 56px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.palm .hand-glow {
+  stroke-width: 8;
+  opacity: 0.25;
+}
+
+.palm .progress,
+.palm .hand-trace,
+.palm .hand-trace-glow,
+.palm .hand-trace-head,
+.palm .under-light,
+.palm .wave,
+.palm .beam {
+  opacity: 0;
+}
+
+.palm .progress,
+.palm .hand-trace,
+.palm .hand-trace-glow {
+  stroke: var(--text);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.palm .progress {
+  stroke-width: 7;
+}
+
+/* Neon iz: oq o'zak, atrofida moviy nur va chiziq uchida porlab boruvchi bosh */
+.palm .hand-trace {
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.palm .hand-trace-glow {
+  stroke: var(--neon);
+  stroke-width: 13;
+  stroke-linejoin: round;
+  filter: blur(6px);
+}
+
+.palm .hand-trace-head {
+  stroke: var(--text);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 3 97;
+  stroke-dashoffset: 3;
+  filter: blur(1.5px) drop-shadow(0 0 8px var(--neon));
+}
+
+.palm .wave {
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scanning .palm .spin {
+  animation-duration: var(--hold);
+}
+
+.scanning .palm .progress,
+.scanning .palm .hand-trace,
+.scanning .palm .hand-trace-glow {
+  opacity: 1;
+  animation: progress var(--hold) linear forwards, turn-verified var(--finish) var(--finish-at) linear forwards;
+}
+
+.scanning .palm .hand-trace-head {
+  opacity: 1;
+  animation: trace-head var(--hold) linear forwards;
+}
+
+.scanning .palm .under-light {
+  animation: under-light calc(var(--hold) / 4) ease-in-out infinite alternate;
+}
+
+.scanning .palm .wave {
+  animation: wave calc(var(--hold) / 2) ease-out infinite;
+}
+
+.scanning .palm .wave-2 {
+  animation-delay: calc(var(--hold) / 6);
+}
+
+.scanning .palm .wave-3 {
+  animation-delay: calc(var(--hold) / 3);
+}
+
+.scanning .palm .beam {
+  opacity: 1;
+  animation: beam calc(var(--hold) / 2) ease-in-out infinite alternate;
+}
+
+/* Kaft ichi to'liq rangli: effektlar faqat atrofida, kaft ostidan chiqayotgandek ko'rinadi.
+   Kontur xiralashadi, aks holda oq chiziq oq kontur ustida ko'rinmaydi */
+.scanning .palm .hand {
+  fill: rgb(28 86 214);
+  stroke: rgb(255 255 255 / 25%);
+  animation: hand-verified var(--finish) var(--finish-at) linear forwards;
+}
+
+/* Tekshiruv tugadi: effektlar to'xtaydi, ekran "Tasdiqlandi" holatida qoladi */
+.verified .palm .under-light,
+.verified .palm .wave,
+.verified .palm .beam,
+.verified .palm .hand-trace-head,
+.verified #start-button::after {
+  animation: none;
+  opacity: 0;
+}
+
+.verified .spin,
+.verified .hud .orbit {
+  animation-play-state: paused;
+}
+
+.verified #start-button {
+  cursor: default;
+}
+
+.map-title {
+  fill: var(--text);
+  stroke: none;
+  font-size: 22px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+#start-button:hover {
+  transform: scale(1.02);
+}
+
+#start-button:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 6px;
+}
+
+.scanning #start-button::before {
+  border-color: var(--verified);
+  opacity: 0;
+  animation: verified-burst var(--finish) var(--finish-at) ease-out;
+}
+
+/* Tekshiruv tugagach butun ekran xiralashadi, matn yuqoridan o'rtaga tushadi */
+.reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  pointer-events: none;
+  transition: background-color 0.8s ease, backdrop-filter 0.8s ease;
+}
+
+.verified .reveal {
+  background-color: rgb(10 30 90 / 55%);
+  backdrop-filter: blur(calc(var(--u) * 12));
+}
+
+#fireworks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.reveal-text {
+  position: relative;
+  font-size: 90px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  /* Oraliq oxirgi harfdan keyin ham qo'shiladi: matn o'rtadan surilmasligi uchun chapga ham beriladi */
+  padding: 0.35em 0 0.35em 0.08em;
+  line-height: 1.5;
+  text-wrap: balance;
+  transform: translateY(-100vh);
+  color: var(--text);
+  text-shadow: 0 0 0.05em var(--text), 0 0 0.16em var(--neon), 0 0 0.4em rgb(57 230 255 / 55%);
+}
+
+.reveal-text::before,
+.reveal-text::after {
+  content: "";
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--text) 20%, var(--text) 80%, transparent);
+  filter: drop-shadow(0 0 0.12em var(--glow));
+  transform: scaleX(0);
+}
+
+.reveal-text::before {
+  top: 0;
+}
+
+.reveal-text::after {
+  bottom: 0;
+}
+
+.verified .reveal-text {
+  animation: reveal-drop 2.2s ease-out forwards;
+}
+
+.verified .reveal-text::before,
+.verified .reveal-text::after {
+  animation: reveal-line 0.8s 2.2s ease-out forwards;
+}
+
+@keyframes reveal-drop {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-line {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes verified-burst {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  to {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+}
+
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes trace-head {
+  to {
+    stroke-dashoffset: -97;
+  }
+}
+
+@keyframes progress {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes turn-verified {
+  to {
+    stroke: var(--verified);
+  }
+}
+
+@keyframes hand-verified {
+  to {
+    fill: rgb(46 190 140);
+  }
+}
+
+@keyframes button-verified {
+  to {
+    box-shadow: 0 0 calc(var(--u) * 120) rgb(93 255 180 / 70%), inset 0 0 calc(var(--u) * 60) rgb(93 255 180 / 45%);
+  }
+}
+
+@keyframes under-light {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 0.8;
+  }
+}
+
+@keyframes wave {
+  from {
+    transform: scale(0.1);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes beam {
+  from {
+    transform: translateY(-215px);
+  }
+
+  to {
+    transform: translateY(215px);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+/* Tor va tik ekranda yon panellarga joy yetmaydi */
+@media (max-aspect-ratio: 5/4) {
+  :root {
+    --u: calc(100vmin / 640);
+  }
+
+  .hud {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin,
+  .hud .orbit {
+    animation: none;
+  }
+
+  .verified .reveal-text,
+  .verified .reveal-text::before,
+  .verified .reveal-text::after {
+    animation: none;
+    transform: none;
+  }
+
+  .scanning .palm .under-light,
+  .scanning .palm .wave,
+  .scanning .palm .beam,
+  .scanning #start-button::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  #start-button::before,
+  .scanning #start-button::before {
+    animation: none;
+    opacity: 0;
+  }
+}
